@@ -1,5 +1,11 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Chat from "./pages/chat/Chat";
+import Profile from "./pages/profile/Profile";
+import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   useEffect(() => {
@@ -11,7 +17,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>hello world has been changed</h1>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/chat" element={<Chat />} />
+          <Route exact path="/profile" element={<Profile />} />
+        </Routes>
       </header>
     </div>
   );
