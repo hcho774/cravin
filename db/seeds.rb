@@ -14,6 +14,7 @@ User.create!(first_name: "Amy", last_name: "Lee", email: "amy@gmail.com", userna
 Question.create!(questions: "Would you prefer to live alone?")
 
 Answer.create!(user_id: 1, question_id: 1, answer: true, pitch: "because I am independent")
+Answer.create!(user_id: 2, question_id: 1, answer: false, pitch: "no doubt about it" )
 
 Room.create!(title: "cho's room")
 

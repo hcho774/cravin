@@ -1,10 +1,23 @@
 import React from "react";
 import Question from "../../components/Question";
+import NavBar from "../../components/NavBar";
+import Card from "../../components/Card";
+import "./home.scss";
+
 const Home = () => {
   return (
-    <div>
+    <div className="home">
       <div className="homecontainer">
-        <Question />
+        <NavBar />
+        <div className="questions">
+          <Question />
+        </div>
+        <div className="cards">
+          <Card test={true} />
+          {/* <Card test={false}/> */}
+          <Card test={true} />
+          <Card test={true} />
+        </div>
       </div>
     </div>
   );
