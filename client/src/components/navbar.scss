@@ -14,21 +14,29 @@
         justify-content: space-between;
         border-bottom:  0.7px solid lightgray;}
 
+
+        .logo{
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(2, 2, 2);
+            display: flex;
+            align-items: center;
+            padding: 3px;
+        }
+
         .items{
             display: flex;
             align-items: center;
+            
             .item{
                 display: flex;
                 align-items: center;
-                margin-right: 10px;
-
-                .icon{
-                    font-size: 20px;
-                }
+                margin-right: 12px;
+                position: relative;
 
                 .avatar{
-                    width: 33px;
-                    height: 33px;
+                    width: 40px;
+                    height: 40px;
                     border-radius: 50%;
                 }
             }

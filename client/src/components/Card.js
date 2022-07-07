@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./card.scss";
-const Card = ({ test }) => {
+const Card = ({ answer }) => {
+  const { id, pitch, user_id } = answer;
+
   return (
     <div className="card">
       <div className="left">
-        <span className="title">test</span>
-        <span className="counter">test</span>
-        <span className="link">test</span>
+        <span className="title">{user_id}</span>
+        <span className="link">{pitch}</span>
+        <button>page</button>
+        {/* <span className="link">13</span> */}
       </div>
 
       <div className="right">
@@ -14,7 +17,7 @@ const Card = ({ test }) => {
           {/* <KeyboardArrowUpIcon />
           {diff} % */}
         </div>
-        Test
+        {/* Test */}
       </div>
     </div>
   );

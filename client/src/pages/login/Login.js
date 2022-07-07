@@ -2,27 +2,23 @@ import React, { useState } from "react";
 import LoginForm from "../../components/LoginForm";
 import SignUpForm from "../../components/SignUpForm";
 
-const Login = () => {
-  const [showLogin, setShowLogin] = useState(false);
+const Login = ({ setUser, navigate }) => {
+  const [showLogin, setShowLogin] = useState(true);
 
   return (
     <div>
       {showLogin ? (
         <>
           <LoginForm
-          // onLogin={onLogin}
-          // navigate={navigate}
-          // setShowLogin={setShowLogin}
+            setUser={setUser}
+            navigate={navigate}
+            setShowLogin={setShowLogin}
           />
           {/* <Divider /> */}
         </>
       ) : (
         <>
-          <SignUpForm
-          // onLogin={onLogin}
-          // navigate={navigate}
-          // setShowLogin={setShowLogin}
-          />
+          <SignUpForm setUser={setUser} setShowLogin={setShowLogin} />
           {/* <Divider /> */}
         </>
       )}
