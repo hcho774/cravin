@@ -6,23 +6,9 @@ import Profile from "./pages/profile/Profile";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
-  const [question, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState([]);
-
-  useEffect(() => {
-    fetch("/answers")
-      .then((res) => res.json())
-      .then((answers) => setAnswers(answers));
-  }, []);
-
-  useEffect(() => {
-    fetch("/questions")
-      .then((res) => res.json())
-      .then((question) => setQuestions(question[0]));
-  }, []);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -41,22 +27,18 @@ function App() {
           <Route
             exact
             path="/"
-            element={
-              <Home
-                question={question}
-                answers={answers}
-                user={user}
-                setUser={setUser}
-                navigate={navigate}
-              />
-            }
+            element={<Home user={user} setUser={setUser} navigate={navigate} />}
           />
           <Route
             exact
             path="/login"
             element={<Login setUser={setUser} navigate={navigate} />}
           />
-          <Route exact path="/chat" element={<Chat />} />
+          <Route
+            exact
+            path="/chat"
+            element={<Chat user={user} setUser={setUser} navigate={navigate} />}
+          />
           <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </header>

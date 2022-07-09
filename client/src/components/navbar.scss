@@ -5,6 +5,7 @@
     align-items: center;
     font-size: 14px;
     color: #555;
+    
 
     .wrapper {
         width: 100%;
@@ -16,6 +17,7 @@
 
 
         .logo{
+            margin-top: 10px;
             font-size: 20px;
             font-weight: bold;
             color: rgb(2, 2, 2);
@@ -33,7 +35,9 @@
                 align-items: center;
                 margin-right: 12px;
                 position: relative;
-
+                
+            
+                
                 .avatar{
                     width: 40px;
                     height: 40px;
