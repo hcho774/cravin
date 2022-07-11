@@ -67,37 +67,6 @@ const SignUpForm = ({ setUser, setShowLogin }) => {
 
   return (
     <div id="log_in">
-      {/* <div id="login_in_bg">
-        <div className="loginbox">
-          <h3 id="log_in_up_text">Please Sign Up</h3>
-          <form id="log_in_form" onSubmit={handleSubmit}>
-            <p>Username</p>
-            <input
-              type="username"
-              name="username"
-              placeholder="Enter your username"
-            <p>Password</p>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={onChange}
-            />
-            <button variant="fill" color="primary" type="submit">
-              {isLoading ? "Loading..." : "Submit"}
-            </button>
-            <p>
-              Already have an account? &nbsp;
-              <button color="secondary" onClick={() => setShowLogin(true)}>
-                Log In
-              </button>
-            </p>
-            <br />
-            <em>{errors}</em>
-          </form>
-        </div>
-      </div> */}
       <div
         class="modal modal-signin position-static d-block bg-light py-5"
         tabindex="-1"
@@ -118,7 +87,7 @@ const SignUpForm = ({ setUser, setShowLogin }) => {
             </div>
 
             <div class="modal-body p-5 pt-0">
-              <form class="">
+              <form class="" onSubmit={handleSubmit}>
                 <div class="form-floating mb-3">
                   <input
                     name="username"
@@ -154,40 +123,11 @@ const SignUpForm = ({ setUser, setShowLogin }) => {
                   Already have an account? &nbsp;
                   <button
                     class="w-8 mb-2 btn btn-sm rounded-3 btn-dark"
-                    onClick={() => setShowLogin(false)}
+                    onClick={() => setShowLogin(true)}
                   >
                     Sign in
                   </button>
                 </h2>
-                <hr class="my-4" />
-                <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-                <button
-                  class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3"
-                  type="submit"
-                >
-                  <svg class="bi me-1" width="16" height="16">
-                    {/* <use xlink:href="#twitter"></use> */}
-                  </svg>
-                  Sign up with Twitter
-                </button>
-                <button
-                  class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
-                  type="submit"
-                >
-                  <svg class="bi me-1" width="16" height="16">
-                    {/* <use xlink:href="#facebook"></use> */}
-                  </svg>
-                  Sign up with Facebook
-                </button>
-                <button
-                  class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
-                  type="submit"
-                >
-                  <svg class="bi me-1" width="16" height="16">
-                    {/* <use xlink:href="#github"></use> */}
-                  </svg>
-                  Sign up with GitHub
-                </button>
               </form>
             </div>
           </div>
@@ -198,3 +138,37 @@ const SignUpForm = ({ setUser, setShowLogin }) => {
 };
 
 export default SignUpForm;
+
+{
+  /* <div id="login_in_bg">
+        <div className="loginbox">
+          <h3 id="log_in_up_text">Please Sign Up</h3>
+          <form id="log_in_form" onSubmit={handleSubmit}>
+            <p>Username</p>
+            <input
+              type="username"
+              name="username"
+              placeholder="Enter your username"
+            <p>Password</p>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={onChange}
+            />
+            <button variant="fill" color="primary" type="submit">
+              {isLoading ? "Loading..." : "Submit"}
+            </button>
+            <p>
+              Already have an account? &nbsp;
+              <button color="secondary" onClick={() => setShowLogin(true)}>
+                Log In
+              </button>
+            </p>
+            <br />
+            <em>{errors}</em>
+          </form>
+        </div>
+      </div> */
+}

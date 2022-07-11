@@ -1,49 +1,102 @@
-.navbar{
-    height: 50px;
-    border-bottom: 0.5px solid white;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
+// .navbar{
+//     height: 70px;
+//     border-bottom: 0px solid white;
+//     display: flex;
+//     align-items: center;
+//     font-size: 14px;
+//     color: #555;
     
 
-    .wrapper {
+//     .wrapper {
+//         width: 100%;
+//         padding-right: 9px;
+//         padding-left:9px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: space-between;
+//         border-bottom:  0px solid lightgray;}
+
+//         .logo{
+//             margin-top: 10px;
+//             font-size: 20px;
+//             font-weight: bold;
+//             color: rgb(2, 2, 2);
+//             display: flex;
+//             align-items: center;
+//             padding: 3px;
+//         }
+
+//         .nav_btn{
+//             color: rgb(60, 227, 222);
+//             background-color: rgb(255, 255, 255);
+//             font-size: 20px;
+//             padding: 10px 20px;
+//             border-radius: 10px;
+//             border: none;
+//             margin: 10px;
+      
+//         }
+//         .items{
+//             display: flex;
+//             align-items: center;
+            
+//             .item{
+//                 display: flex;
+//                 align-items: center;
+//                 margin-right: 12px;
+//                 position: relative;
+              
+                
+//                 .avatar{
+//                     width: 40px;
+//                     height: 40px;
+//                     border-radius: 50%;
+//                 }
+    
+                
+//             }
+
+//         }
+//     }
+
+
+
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+.logo_container {
+    width: 170px;
+    margin: 15px;
+    .logo {
         width: 100%;
-        padding: 9px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom:  0.7px solid lightgray;}
-
-
-        .logo{
-            margin-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: rgb(2, 2, 2);
-            display: flex;
-            align-items: center;
-            padding: 3px;
-        }
-
-        .items{
-            display: flex;
-            align-items: center;
-            
-            .item{
-                display: flex;
-                align-items: center;
-                margin-right: 12px;
-                position: relative;
-                
-            
-                
-                .avatar{
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                }
-            }
-
-        }
     }
+    
+}
+
+
+.avatar{
+    margin-top: 20px;
+    margin-right: 40px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+    .nav_btn {
+        color: rgb(5, 218, 211);
+        background-color: rgb(255, 255, 255);
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        margin: 20px;
+        
+    }
+   .nav_btn:disabled {
+        background-color: rgb(181, 180, 180);
+        color: rgb(60, 227, 222);
+    }
+}
+

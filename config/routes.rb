@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :messages
   # resources :rooms, only: [:show, :create]
-
+get "/rooms", to: "rooms#index"
   get "/rooms/:recipient_id", to: "rooms#show"
   # Defines the root path route ("/")
   # root "articles#index"

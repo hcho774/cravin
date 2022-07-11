@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./question.scss";
 
 const form = {
@@ -7,59 +7,83 @@ const form = {
   answer: null,
   pitch: "",
 };
-const Question = ({ question, user, setAnswers, answers }) => {
-  const { id, questions } = question;
-  const [success, setSuccess] = useState(false);
+const Question = ({ q, user, setAnswers, answers }) => {
+  const [success, setSuccess] = useState("");
   const [errors, setErrors] = useState("");
   const [formData, setFormData] = useState({
     user_id: user.id,
-    question_id: id,
+    question_id: q.id,
     answer: null,
     pitch: "",
   });
 
-  console.log(question);
-
   function handleChange(e) {
-    console.log(e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   }
 
-  console.log(id);
-
-  console.log(formData);
+  const existingAnswer = answers.find((answer) => {
+    return answer.user_id === user.id;
+  });
 
   function handleSubmit(e) {
-    console.log(e);
     e.preventDefault();
-    fetch(`/answers`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).then((r) => {
-      if (r.ok) {
-        r.json().then((answer) => {
-          setAnswers([...answers, answer]);
-          setSuccess(true);
-        });
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-      }
-    });
+    if (!existingAnswer) {
+      fetch(`/answers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((answer) => {
+            setAnswers([...answers, answer]);
+            setSuccess("You have successfully answered this question.");
+            setFormData(formData);
+          });
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+      });
+    } else {
+      fetch(`/answers/${existingAnswer.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          answer: formData.answer,
+          pitch: formData.pitch,
+        }),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((answer) => {
+            const filteredAnswer = answers.filter((ans) => {
+              return ans.user_id !== user.id;
+            });
+            console.log(answer);
+
+            setAnswers(answer);
+            setSuccess("You have successfully updated your answer.");
+            setFormData(formData);
+          });
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+      });
+    }
   }
 
   return (
     <div className="question">
       <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Today's question</h1>
-        <p class="lead">{questions}</p>
+        <p class="lead">{}</p>
 
-        <form action="" onSubmit={handleSubmit}>
+        <form action="" onSubmit={handleSubmit} className="for">
           <input
             type="radio"
             class="btn-check"
@@ -86,7 +110,7 @@ const Question = ({ question, user, setAnswers, answers }) => {
           <label class="btn btn-secondary" for="option2">
             No
           </label>
-          <div class="input-group w-50 mt-3 mb-3 ">
+          <div class="input-group w-10 mt-3 mb-3" className="in">
             <input
               type="text"
               class="form-control"
@@ -101,7 +125,7 @@ const Question = ({ question, user, setAnswers, answers }) => {
               type="submit"
               id="button-addon2"
             >
-              Button
+              Submit
             </button>
           </div>
           {/* <label>
@@ -133,6 +157,7 @@ const Question = ({ question, user, setAnswers, answers }) => {
           </button> */}
         </form>
         <em>{errors}</em>
+        <em>{success}</em>
       </div>
     </div>
   );

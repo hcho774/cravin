@@ -5,6 +5,11 @@ class RoomsController < ApplicationController
     
     skip_before_action :authorize
     
+def index
+    room = Room.all
+    render json: room, status: :ok
+end
+
     def show
         room = Room.find_by(recipient_id: params[:recipient_id])
         render json: room, status: :ok

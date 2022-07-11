@@ -22,7 +22,7 @@ const LoginForm = ({ setUser, navigate, setShowLogin }) => {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
-          navigate("/");
+          navigate("/chat");
         });
       } else {
         r.json().then((err) => {

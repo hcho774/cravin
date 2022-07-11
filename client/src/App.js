@@ -7,8 +7,18 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [q, setQuestions] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("/questions")
+      .then((res) => res.json())
+      .then((question) => {
+        console.log(question);
+        setQuestions(question[0]);
+      });
+  }, []);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -18,7 +28,8 @@ function App() {
     });
   }, []);
 
-  if (!user) return <Login setUser={setUser} navigate={navigate} />;
+  if (!user)
+    return <Home user={user} setUser={setUser} navigate={navigate} q={q} />;
 
   return (
     <div className="App">
@@ -27,19 +38,34 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Home user={user} setUser={setUser} navigate={navigate} />}
+            element={
+              <Home user={user} setUser={setUser} navigate={navigate} q={q} />
+            }
           />
-          <Route
+          {/* <Route
             exact
             path="/login"
-            element={<Login setUser={setUser} navigate={navigate} />}
-          />
+            element={
+              <Login
+                setUser={setUser}
+                navigate={navigate}
+                // setShowLogin={setShowLogin}
+                // showLogin={showLogin}
+              />
+            }
+          /> */}
           <Route
             exact
             path="/chat"
             element={<Chat user={user} setUser={setUser} navigate={navigate} />}
           />
-          <Route exact path="/profile" element={<Profile />} />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <Profile user={user} setUser={setUser} navigate={navigate} />
+            }
+          />
         </Routes>
       </header>
     </div>

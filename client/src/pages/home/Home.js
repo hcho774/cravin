@@ -3,21 +3,17 @@ import Question from "../../components/Question";
 import NavBar from "../../components/NavBar";
 import Card from "../../components/Card";
 import "./home.scss";
+import AuthModal from "../../components/AuthModal";
 
-const Home = ({ user, setUser, navigate }) => {
-  const [question, setQuestions] = useState([]);
+const Home = ({ q, user, setUser, navigate }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     fetch("/answers")
       .then((res) => res.json())
       .then((answers) => setAnswers(answers));
-  }, []);
-
-  useEffect(() => {
-    fetch("/questions")
-      .then((res) => res.json())
-      .then((question) => setQuestions(question[0]));
   }, []);
 
   const answerDisplay = answers.map((answer) => {
@@ -31,6 +27,15 @@ const Home = ({ user, setUser, navigate }) => {
     );
   });
 
+  function handleLogout() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+        navigate("/");
+      }
+    });
+  }
+
   function handleAnswerDelete(id) {
     console.log(id);
     fetch(`/answers/${id}`, {
@@ -42,21 +47,59 @@ const Home = ({ user, setUser, navigate }) => {
     });
   }
 
+  function handleClick() {
+    setShowModal(true);
+    setShowLogin(true);
+  }
+
   return (
-    <div className="home">
+    <>
+      <div className="overlay">
+        <NavBar
+          user={user}
+          setUser={setUser}
+          minimal={false}
+          navigate={navigate}
+          showModal={showModal}
+          setShowLogin={setShowLogin}
+          setShowModal={setShowModal}
+        />
+        <div className="home">
+          <h1 className="primary_title">Meet Unknown</h1>
+          <button
+            className="primary_button"
+            onClick={user ? handleLogout : handleClick}
+          >
+            {user ? "Singout" : "Create Account"}
+          </button>
+          {showModal && (
+            <AuthModal
+              setShowModal={setShowModal}
+              setUser={setUser}
+              setShowLogin={setShowLogin}
+              navigate={navigate}
+              showLogin={showLogin}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* <div className="home">
       <div className="homecontainer">
         <NavBar user={user} setUser={setUser} navigate={navigate} />
         <div className="questions">
           <Question
-            question={question}
             user={user}
             setAnswers={setAnswers}
             answers={answers}
+            q={q}
           />
         </div>
         <div className="cards">{answerDisplay}</div>
       </div>
     </div>
+    </> */}
+    </>
   );
 };
 
