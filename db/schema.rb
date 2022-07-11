@@ -39,6 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_151340) do
 
   create_table "rooms", force: :cascade do |t|
     t.string "title"
+    t.integer "sender_id"
+    t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

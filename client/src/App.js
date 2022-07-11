@@ -6,22 +6,18 @@ import Profile from "./pages/profile/Profile";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
-  const [question, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState([]);
+  const [q, setQuestions] = useState([]);
 
-  useEffect(() => {
-    fetch("/answers")
-      .then((res) => res.json())
-      .then((answers) => setAnswers(answers));
-  }, []);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/questions")
       .then((res) => res.json())
-      .then((question) => setQuestions(question[0]));
+      .then((question) => {
+        console.log(question);
+        setQuestions(question[0]);
+      });
   }, []);
 
   useEffect(() => {
@@ -32,7 +28,8 @@ function App() {
     });
   }, []);
 
-  if (!user) return <Login setUser={setUser} navigate={navigate} />;
+  if (!user)
+    return <Home user={user} setUser={setUser} navigate={navigate} q={q} />;
 
   return (
     <div className="App">
@@ -42,22 +39,33 @@ function App() {
             exact
             path="/"
             element={
-              <Home
-                question={question}
-                answers={answers}
-                user={user}
+              <Home user={user} setUser={setUser} navigate={navigate} q={q} />
+            }
+          />
+          {/* <Route
+            exact
+            path="/login"
+            element={
+              <Login
                 setUser={setUser}
                 navigate={navigate}
+                // setShowLogin={setShowLogin}
+                // showLogin={showLogin}
               />
             }
+          /> */}
+          <Route
+            exact
+            path="/chat"
+            element={<Chat user={user} setUser={setUser} navigate={navigate} />}
           />
           <Route
             exact
-            path="/login"
-            element={<Login setUser={setUser} navigate={navigate} />}
+            path="/profile"
+            element={
+              <Profile user={user} setUser={setUser} navigate={navigate} />
+            }
           />
-          <Route exact path="/chat" element={<Chat />} />
-          <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </header>
     </div>
