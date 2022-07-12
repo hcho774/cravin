@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import WhiteLogo from "../images/WhiteLogo.png";
 import ColorLogo from "../images/ColorLogo.png";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const NavBar = ({
   user,
   setUser,
@@ -12,6 +14,7 @@ const NavBar = ({
   setShowLogin,
   setShowModal,
   minimal,
+  showChat,
 }) => {
   // function handleLogout() {
   //   fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -44,13 +47,31 @@ const NavBar = ({
           Login
         </button>
       ) : (
-        <Link to="/profile" style={{ textDecoration: "none" }}>
-          <img
-            src="https://images.mubicdn.net/images/cast_member/2552/cache-207-1524922850/image-w856.jpg?size=800x"
-            alt=""
-            className="avatar"
-          />
-        </Link>
+        <div className="items">
+          {showChat ? (
+            <div className="item">
+              <Link to="/chat" style={{ textDecoration: "none" }}>
+                <h3>CHAT</h3>
+              </Link>
+            </div>
+          ) : (
+            <em></em>
+          )}
+
+          <div className="item">
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <img
+                src={
+                  user.img === null
+                    ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                    : user.img
+                }
+                alt=""
+                className="avatar"
+              />
+            </Link>
+          </div>
+        </div>
       )}
 
       {/* <button onClick={handleLogout}>logout</button> */}
