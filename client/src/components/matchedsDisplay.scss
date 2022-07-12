@@ -1,0 +1,22 @@
+
+.matches-display {
+    padding: 20px;
+    height: 60vh;
+    overflow-y: auto;
+
+    .img-container {
+        height: 30px;
+        width: 30px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin: 10px;
+        img {
+            width: 100%;
+        }
+    }
+    
+h3{
+    text-align: left;
+}
+
+}

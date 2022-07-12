@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import "./authmodal.scss";
 
 const form = {
-  first_name: "",
-  last_name: "",
-  email: "",
   username: "",
+  first_name: "",
+  dob_day: "",
+  dob_month: "",
+  dob_year: "",
+  show_gender: false,
   password: "",
-  location: "",
+  gender_identity: "",
+  gender_interest: "",
   img: "",
-  birth_date: "",
+  matches: 0,
 };
 
 const AuthModal = ({
@@ -24,21 +27,20 @@ const AuthModal = ({
   const [errors, setErrors] = useState([]);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(true);
 
   const [formData, setFormData] = useState({
+    username: "",
     first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
+    dob_day: "",
+    dob_month: "",
+    dob_year: "",
+    show_gender: false,
     password: "",
-    location: "",
+    gender_identity: "",
+    gender_interest: "",
     img: "",
-    birth_date: "",
-  });
-
-  const [formDataLogin, setFormDataLogin] = useState({
-    username: "",
-    password: "",
+    matches: 0,
   });
 
   function onChange(e) {
@@ -55,20 +57,20 @@ const AuthModal = ({
       }
     }
   }
+
   console.log(formData);
-
-  console.log(confirmPassword);
-
   function handleClick() {
     setShowModal(false);
   }
 
+  // if (password !== confirmPassword) {
+  //   setErrors("Passwords need to match!");
+  //   setIsConfirmed(false);
+  // }
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    // if (password !== confirmPassword) {
-    //   setErrors("Passwords need to match!");
-    // } else
     if (showLogin) {
       setErrors([]);
       setIsLoading(true);
@@ -84,12 +86,13 @@ const AuthModal = ({
           r.json().then((user) => {
             setUser(user);
             console.log(user);
-
+            navigate("/profile");
             // setShowLogin(true);
           });
         } else {
           r.json().then((err) => {
             setErrors(err.errors);
+            console.log(err);
           });
         }
       });
@@ -107,7 +110,11 @@ const AuthModal = ({
         if (r.ok) {
           r.json().then((user) => {
             setUser(user);
-            navigate("/profile");
+            if (user.gender_identity) {
+              navigate("/question");
+            } else {
+              navigate("/profile");
+            }
           });
         } else {
           r.json().then((err) => {
@@ -156,7 +163,11 @@ const AuthModal = ({
           />
         )}
         {/* <input className="secondary-button" type="submit" /> */}
-        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit">
+        <button
+          class="w-100 mb-2 btn btn-lg rounded-3 btn-dark"
+          type="submit"
+          disabled={isConfirmed ? "" : "no"}
+        >
           {isLoading ? "Loading..." : "Submit"}
         </button>
         {/* <h2 class="fs-6 fw-bold mt-2 mb-2">

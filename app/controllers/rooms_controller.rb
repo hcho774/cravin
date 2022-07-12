@@ -1,25 +1,24 @@
 class RoomsController < ApplicationController
-
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :invalid
     
     skip_before_action :authorize
     
-def index
+    def index
     room = Room.all
     render json: room, status: :ok
-end
+    end
 
     def show
-        room = Room.find_by(recipient_id: params[:recipient_id])
-        render json: room, status: :ok
+        user = User.find(params[:id])
+        user_rooms = user.rooms
+        render json: user_rooms, status: :ok
       end
 
     def create
         room = Room.create!(room_params)
         render json: room, status: :created
     end
-
 
     private
 

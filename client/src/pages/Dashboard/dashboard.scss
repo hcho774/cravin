@@ -1,0 +1,50 @@
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    .swipe-container {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+    }
+
+    .card-container {
+        width: 400px;
+        height: 650px;
+        .swipe {
+            position: absolute;
+
+.card { 
+    width: 400px;
+    height: 650px;
+
+    border-radius: 30px;
+    background-size: cover;
+    -webkit-box-shadow: 1px 8px 16px 8px rgb(156, 249, 249);
+
+    box-shadow: 1px 8px 16px 8px rgb(222, 255, 255);
+
+    
+    background-position: center;
+    
+h3 {
+    margin-top: 0;
+}
+
+}
+        }
+    }
+    .swipe-info {
+        position: absolute;
+        bottom: 0;
+        padding: 10px;
+    }
+}
+
+
+
+
+

@@ -1,83 +1,83 @@
-#log_in{
-    background: rgb(251, 251, 251);
-    display: flex;
-    height: 100vh;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-  }
+// #log_in{
+//     background: rgb(251, 251, 251);
+//     display: flex;
+//     height: 100vh;
+//     background-size: cover;
+//     display: flex;
+//     justify-content: center;
+//   }
   
-    .loginbox{
-      width: 320px;
-      height: 500px;
-      background: rgb(255, 255, 255);
-      color: #fff;
-      top: 50%;
-      left: 50%;
-      position: absolute;
-      transform: translate(-50%, -50%);
-      box-sizing: border-box;
-      padding: 70px 30px;
-      -webkit-box-shadow: 1px 8px 16px 8px rgb(35, 36, 36);
-      box-shadow: 1px 8px 16px 8px rgb(64, 65, 65);
-      border-radius: 10px;
-    }
+//     .loginbox{
+//       width: 320px;
+//       height: 500px;
+//       background: rgb(255, 255, 255);
+//       color: #fff;
+//       top: 50%;
+//       left: 50%;
+//       position: absolute;
+//       transform: translate(-50%, -50%);
+//       box-sizing: border-box;
+//       padding: 70px 30px;
+//       -webkit-box-shadow: 1px 8px 16px 8px rgb(35, 36, 36);
+//       box-shadow: 1px 8px 16px 8px rgb(64, 65, 65);
+//       border-radius: 10px;
+//     }
     
-    // .avatar{
-    //   width: 120px;
-    //   height: 120px;
-    //   border-radius: 50%;
-    //   position: absolute;
-    //   top: -70px;
-    //   left: calc(50% - 60px);
-    
-    
-    // }
-    
-    #log_in_up_text {
-      margin: 0;
-      padding: 0 0 20px;
-      text-align: center;
-      font-size: 22px;
-    }
-    
-    .loginbox p{
-      margin: 0;
-      padding: 0;
-      font-weight: bold;
-    }
-    
-    .loginbox input {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    
-    .loginbox input[type="first_name"], input[type="last_name"],input[type="email"],input[type="username"],input[type="password"] {
-      border: none;
-      border-bottom: 1px solid #fff;
-      background: transparent;
-      outline: none;
-      height: 40px;
-      color: rgb(46, 46, 46);
-      font-size: 16px; 
-    }
-    
-    .loginbox button[type="submit"] {
-      border: none;
-      outline: none;
-      height: 40px;
-      background: #444444;
-      color: #fff;
-      font-size: 18px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    
-    }
+//     // .avatar{
+//     //   width: 120px;
+//     //   height: 120px;
+//     //   border-radius: 50%;
+//     //   position: absolute;
+//     //   top: -70px;
+//     //   left: calc(50% - 60px);
     
     
-    .loginbox button[type="submit"]:hover {
-      cursor: pointer;
-      background: #3906cf;
-      color: #000;
-    }
+//     // }
+    
+//     #log_in_up_text {
+//       margin: 0;
+//       padding: 0 0 20px;
+//       text-align: center;
+//       font-size: 22px;
+//     }
+    
+//     .loginbox p{
+//       margin: 0;
+//       padding: 0;
+//       font-weight: bold;
+//     }
+    
+//     .loginbox input {
+//       width: 100%;
+//       margin-bottom: 10px;
+//     }
+    
+//     .loginbox input[type="first_name"], input[type="last_name"],input[type="email"],input[type="username"],input[type="password"] {
+//       border: none;
+//       border-bottom: 1px solid #fff;
+//       background: transparent;
+//       outline: none;
+//       height: 40px;
+//       color: rgb(46, 46, 46);
+//       font-size: 16px; 
+//     }
+    
+//     .loginbox button[type="submit"] {
+//       border: none;
+//       outline: none;
+//       height: 40px;
+//       background: #444444;
+//       color: #fff;
+//       font-size: 18px;
+//       border-radius: 10px;
+//       margin-bottom: 20px;
+    
+//     }
+    
+    
+//     .loginbox button[type="submit"]:hover {
+//       cursor: pointer;
+//       background: #3906cf;
+//       color: #000;
+//     }
   

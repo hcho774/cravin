@@ -24,9 +24,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_151340) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "room_id"
-    t.string "body"
+    t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -38,22 +37,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_151340) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.string "title"
-    t.integer "sender_id"
+    t.integer "user_id"
     t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
     t.string "username"
+    t.string "first_name"
+    t.string "dob_day"
+    t.string "dob_month"
+    t.string "dob_year"
+    t.boolean "show_gender"
     t.string "password_digest"
-    t.string "location"
+    t.string "gender_identity"
+    t.string "gender_interest"
     t.string "img"
-    t.string "birth_date"
+    t.integer "matches"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -8,24 +8,17 @@ import AuthModal from "../../components/AuthModal";
 const Home = ({ q, user, setUser, navigate }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
-  const [answers, setAnswers] = useState([]);
 
-  useEffect(() => {
-    fetch("/answers")
-      .then((res) => res.json())
-      .then((answers) => setAnswers(answers));
-  }, []);
-
-  const answerDisplay = answers.map((answer) => {
-    return (
-      <Card
-        answer={answer}
-        key={answer.user_id}
-        handleAnswerDelete={handleAnswerDelete}
-        user={user}
-      />
-    );
-  });
+  // const answerDisplay = answers.map((answer) => {
+  //   return (
+  //     <Card
+  //       answer={answer}
+  //       key={answer.user_id}
+  //       handleAnswerDelete={handleAnswerDelete}
+  //       user={user}
+  //     />
+  //   );
+  // });
 
   function handleLogout() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -36,16 +29,16 @@ const Home = ({ q, user, setUser, navigate }) => {
     });
   }
 
-  function handleAnswerDelete(id) {
-    console.log(id);
-    fetch(`/answers/${id}`, {
-      method: "DELETE",
-    }).then((r) => {
-      if (r.ok) {
-        setAnswers(answers.filter((answer) => answer.id !== id));
-      }
-    });
-  }
+  // function handleAnswerDelete(id) {
+  //   console.log(id);
+  //   fetch(`/answers/${id}`, {
+  //     method: "DELETE",
+  //   }).then((r) => {
+  //     if (r.ok) {
+  //       setAnswers(answers.filter((answer) => answer.id !== id));
+  //     }
+  //   });
+  // }
 
   function handleClick() {
     setShowModal(true);

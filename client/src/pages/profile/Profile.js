@@ -1,27 +1,61 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
 import "./profile.scss";
+
+const form = {
+  username: "",
+  first_name: "First Name",
+  dob_day: "DD",
+  dob_month: "MM",
+  dob_year: "YYYY",
+  show_gender: false,
+  password_digest: "",
+  gender_identity: "",
+  gender_interest: "",
+  img: "image url",
+  matches: [],
+};
+
 const Profile = ({ user, setUser, navigate }) => {
+  const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState("");
   const [formData, setFormData] = useState({
-    user_id: user.id,
+    username: user.username,
     first_name: "",
     dob_day: "",
     dob_month: "",
     dob_year: "",
     show_gender: false,
-    gender_identity: "man",
-    gender_interest: "woman",
-    url: "",
-    about: "",
+    password_digest: "",
+    gender_identity: "",
+    gender_interest: "",
+    img: "",
     matches: [],
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
+
+    fetch(`/users/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setSuccess(true);
+          console.log(user);
+          setFormData(form);
+          navigate("/chat");
+        });
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
   }
   function handleChange(e) {
-    console.log("e", e);
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     const name = e.target.name;
@@ -31,6 +65,7 @@ const Profile = ({ user, setUser, navigate }) => {
       [name]: value,
     }));
   }
+  console.log(user.first_name);
 
   return (
     <>
@@ -42,9 +77,14 @@ const Profile = ({ user, setUser, navigate }) => {
         showModal={false}
         setShowLogin={false}
         setShowModal={() => {}}
+        showChat={true}
       />
       <div className="onboarding">
-        <h2 className="profile_title">Create you profile</h2>
+        <h2 className="profile_title">
+          {user.first_name !== null
+            ? "Edit your profile"
+            : "Create your profile"}
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <section>
@@ -53,7 +93,7 @@ const Profile = ({ user, setUser, navigate }) => {
               id="first_name"
               type="text"
               name="first_name"
-              placeholder="First Name"
+              placeholder={form.first_name}
               required={true}
               value={formData.first_name}
               onChange={handleChange}
@@ -62,30 +102,29 @@ const Profile = ({ user, setUser, navigate }) => {
             <label>Birthday</label>
             <div className="multiple-input-container">
               <input
-                id="dob_day"
-                type="number"
-                name="dob_day"
-                placeholder="DD"
-                required={true}
-                value={formData.dob_day}
-                onChange={handleChange}
-              />
-
-              <input
                 id="dob_month"
                 type="number"
                 name="dob_month"
-                placeholder="MM"
+                placeholder={form.dob_month}
                 required={true}
                 value={formData.dob_month}
                 onChange={handleChange}
               />
 
               <input
+                id="dob_day"
+                type="number"
+                name="dob_day"
+                placeholder={form.dob_day}
+                required={true}
+                value={formData.dob_day}
+                onChange={handleChange}
+              />
+              <input
                 id="dob_year"
                 type="number"
                 name="dob_year"
-                placeholder="YYYY"
+                placeholder={form.dob_year}
                 required={true}
                 value={formData.dob_year}
                 onChange={handleChange}
@@ -164,7 +203,7 @@ const Profile = ({ user, setUser, navigate }) => {
               />
               <label htmlFor="everyone-gender-interest">Everyone</label>
             </div>
-
+            {/* 
             <label htmlFor="about">About me</label>
             <input
               id="about"
@@ -174,7 +213,7 @@ const Profile = ({ user, setUser, navigate }) => {
               placeholder="I like long walks..."
               value={formData.about}
               onChange={handleChange}
-            />
+            /> */}
 
             <input type="submit" />
           </section>
@@ -182,21 +221,21 @@ const Profile = ({ user, setUser, navigate }) => {
           <section>
             <label htmlFor="url">Profile Photo</label>
             <input
-              type="url"
-              name="url"
-              id="url"
+              type="image url"
+              name="img"
+              id="img"
+              placeholder={form.img}
               onChange={handleChange}
               required={true}
             />
             <div className="photo-container">
-              {formData.url && (
-                <img src={formData.url} alt="profile pic preview" />
+              {formData.img && (
+                <img src={formData.img} alt="profile pic preview" />
               )}
             </div>
           </section>
         </form>
       </div>
-      Profile
     </>
   );
 };
