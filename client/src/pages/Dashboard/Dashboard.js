@@ -271,7 +271,9 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
                   show={show}
                   onHide={() => setShow(false)}
                   dialogClassName="modal-90w"
-                  aria-labelledby="example-custom-modal-styling-title"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  // aria-labelledby="example-custom-modal-styling-title"
                 >
                   <Modal.Header closeButton>
                     <Modal.Title
