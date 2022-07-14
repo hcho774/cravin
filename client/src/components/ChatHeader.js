@@ -1,6 +1,16 @@
 import React from "react";
 import "./chatheader.scss";
-const ChatHeader = ({ user }) => {
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import IconButton from "@mui/material/IconButton";
+const ChatHeader = ({ user, setUser, navigate }) => {
+  function handleLogout() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+        navigate("/");
+      }
+    });
+  }
   return (
     <div className="chat-container-header">
       <div className="profile">
@@ -9,7 +19,10 @@ const ChatHeader = ({ user }) => {
         </div>
         <h3>{user.first_name}</h3>
       </div>
-      <i className="log-out-icon">⇦</i>
+
+      <IconButton onClick={() => handleLogout()}>
+        <ExitToAppIcon />
+      </IconButton>
     </div>
   );
 };

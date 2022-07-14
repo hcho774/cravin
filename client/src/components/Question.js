@@ -7,7 +7,7 @@ const form = {
   answer: null,
   pitch: "",
 };
-const Question = ({ q, user, setAnswers, answers }) => {
+const Question = ({ q, user, setAnswers, answers, getQuestion }) => {
   const [success, setSuccess] = useState("");
   const [errors, setErrors] = useState("");
   const [formData, setFormData] = useState({
@@ -17,6 +17,9 @@ const Question = ({ q, user, setAnswers, answers }) => {
     pitch: "",
   });
 
+  console.log(q);
+
+  console.log(formData);
   function handleChange(e) {
     setFormData({
       ...formData,
@@ -24,7 +27,9 @@ const Question = ({ q, user, setAnswers, answers }) => {
     });
   }
 
-  const existingAnswer = answers.find((answer) => {
+  console.log(q.id);
+
+  const existingAnswer = answers?.find((answer) => {
     return answer.user_id === user.id;
   });
 
@@ -79,41 +84,37 @@ const Question = ({ q, user, setAnswers, answers }) => {
 
   return (
     <div className="question">
-      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Today's question</h1>
-        <p class="lead">{}</p>
+      <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 className="display-4">Today's question</h1>
+        <p className="lead">{}</p>
 
         <form action="" onSubmit={handleSubmit} className="for">
           <input
             type="radio"
-            class="btn-check"
+            className="btn-check"
             name="answer"
             id="option1"
             value="true"
-            autocomplete="off"
+            // autoComplete="off"
             onChange={handleChange}
             // disabled={checked ? "yes" : ""}
           />
-          <label class="btn btn-secondary" for="option1">
-            Yes
-          </label>
+          <label className="btn btn-secondary">Yes</label>
 
           <input
             type="radio"
-            class="btn-check"
+            className="btn-check"
             name="answer"
             id="option2"
             value="false"
-            autocomplete="off"
+            // autoComplete="off"
             onChange={handleChange}
           />
-          <label class="btn btn-secondary" for="option2">
-            No
-          </label>
-          <div class="input-group w-10 mt-3 mb-3" className="in">
+          <label className="btn btn-secondary">No</label>
+          <div className="input-group w-10 mt-3 mb-3">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Pitch your thoughts to the world!"
               aria-label="Pitch your thoughts to the world!"
               aria-describedby="button-addon2"
@@ -121,7 +122,7 @@ const Question = ({ q, user, setAnswers, answers }) => {
               onChange={handleChange}
             />
             <button
-              class="btn btn-outline-secondary"
+              className="btn btn-outline-secondary"
               type="submit"
               id="button-addon2"
             >

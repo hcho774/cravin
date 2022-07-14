@@ -76,8 +76,6 @@ nav {
     
 }
 
-
-
 .items{
                 display: flex;
                 align-items: center;
@@ -87,6 +85,10 @@ nav {
                     align-items: center;
                     margin-right: 12px;
                     position: relative;
+           
+                    #chat_icon{
+                        margin-top: 10px;
+                    }
                   
                     h3{
                         margin-top: 10px;

@@ -6,6 +6,9 @@ import WhiteLogo from "../images/WhiteLogo.png";
 import ColorLogo from "../images/ColorLogo.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+
 const NavBar = ({
   user,
   setUser,
@@ -51,11 +54,23 @@ const NavBar = ({
           {showChat ? (
             <div className="item">
               <Link to="/chat" style={{ textDecoration: "none" }}>
-                <h3>CHAT</h3>
+                <QuestionAnswerIcon
+                  style={{ color: "black" }}
+                  fontSize="large"
+                  id="chat_icon"
+                />
               </Link>
             </div>
           ) : (
-            <em></em>
+            <div className="item">
+              <Link to="/chat" style={{ textDecoration: "none" }}>
+                <QuestionAnswerIcon
+                  style={{ color: "white" }}
+                  fontSize="large"
+                  id="chat_icon"
+                />
+              </Link>
+            </div>
           )}
 
           <div className="item">

@@ -16,7 +16,7 @@ const form = {
   matches: [],
 };
 
-const Profile = ({ user, setUser, navigate }) => {
+const Profile = ({ user, setUser, navigate, getUser }) => {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState("");
   const [formData, setFormData] = useState({
@@ -46,9 +46,9 @@ const Profile = ({ user, setUser, navigate }) => {
       if (r.ok) {
         r.json().then((user) => {
           setSuccess(true);
-          console.log(user);
+          getUser();
           setFormData(form);
-          navigate("/chat");
+          navigate("/question");
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -65,7 +65,6 @@ const Profile = ({ user, setUser, navigate }) => {
       [name]: value,
     }));
   }
-  console.log(user.first_name);
 
   return (
     <>
@@ -203,17 +202,6 @@ const Profile = ({ user, setUser, navigate }) => {
               />
               <label htmlFor="everyone-gender-interest">Everyone</label>
             </div>
-            {/* 
-            <label htmlFor="about">About me</label>
-            <input
-              id="about"
-              type="text"
-              name="about"
-              required={true}
-              placeholder="I like long walks..."
-              value={formData.about}
-              onChange={handleChange}
-            /> */}
 
             <input type="submit" />
           </section>

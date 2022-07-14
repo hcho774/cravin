@@ -9,17 +9,6 @@ const Home = ({ q, user, setUser, navigate }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLogin, setShowLogin] = useState(true);
 
-  // const answerDisplay = answers.map((answer) => {
-  //   return (
-  //     <Card
-  //       answer={answer}
-  //       key={answer.user_id}
-  //       handleAnswerDelete={handleAnswerDelete}
-  //       user={user}
-  //     />
-  //   );
-  // });
-
   function handleLogout() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -28,17 +17,6 @@ const Home = ({ q, user, setUser, navigate }) => {
       }
     });
   }
-
-  // function handleAnswerDelete(id) {
-  //   console.log(id);
-  //   fetch(`/answers/${id}`, {
-  //     method: "DELETE",
-  //   }).then((r) => {
-  //     if (r.ok) {
-  //       setAnswers(answers.filter((answer) => answer.id !== id));
-  //     }
-  //   });
-  // }
 
   function handleClick() {
     setShowModal(true);
@@ -76,22 +54,6 @@ const Home = ({ q, user, setUser, navigate }) => {
           )}
         </div>
       </div>
-
-      {/* <div className="home">
-      <div className="homecontainer">
-        <NavBar user={user} setUser={setUser} navigate={navigate} />
-        <div className="questions">
-          <Question
-            user={user}
-            setAnswers={setAnswers}
-            answers={answers}
-            q={q}
-          />
-        </div>
-        <div className="cards">{answerDisplay}</div>
-      </div>
-    </div>
-    </> */}
     </>
   );
 };

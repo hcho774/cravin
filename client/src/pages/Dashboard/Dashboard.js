@@ -7,29 +7,142 @@ import NewMessage from "../../components/NewMessage";
 import TinderCard from "react-tinder-card";
 import ChatContainer from "../../components/ChatContainer";
 import "./dashboard.scss";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-const Dashboard = ({ user, setUser, navigate }) => {
+const Dashboard = ({ user, setUser, navigate, q }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [room, setRoom] = useState([]);
   const [messages, setMessages] = useState([]);
   const [search, setSearch] = useState("");
   const [errors, setErrors] = useState("");
+  const [isRequest, setIsRequest] = useState(false);
+  const [requestingUser, setRequestingUser] = useState([]);
 
-  // const characters = db;
   const [lastDirection, setLastDirection] = useState();
   const [genderedUsers, setGenderedUsers] = useState(null);
-  // const [filteredGenderedUsers, setFilteredGenderedUsers] = useState(null);
 
-  useEffect(() => {
+  const requestAccept = {
+    user_id: user.id,
+    recipient_id: requestingUser[0]?.user_id,
+  };
+
+  function clickedNo() {
+    console.log("clicked");
+    fetch(`/rooms/${requestingUser[0]?.user_id}`, { method: "DELETE" }).then(
+      (r) => {
+        if (r.ok) {
+          getUser();
+          navigate("/chat");
+        }
+      }
+    );
+    fetch(`/matches/${requestingUser[0]?.user_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ matches: 0 }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setIsRequest(false);
+          getUser();
+        });
+      } else {
+        r.json().then((err) => {
+          setErrors(err.errors);
+        });
+      }
+    });
+  }
+
+  function clickedYes() {
+    fetch("/rooms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestAccept),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((room) => {
+          getUser();
+        });
+      } else {
+        r.json().then((err) => {
+          console.log(err);
+        });
+      }
+    });
+
+    fetch(`/matches/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ matches: requestingUser[0]?.user_id }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setIsRequest(false);
+          getUser();
+        });
+      } else {
+        r.json().then((err) => {
+          setErrors(err.errors);
+        });
+      }
+    });
+  }
+
+  const getGenderedUser = () => {
     if (user?.gender_interest === "woman") {
       fetch(`/woman/`)
         .then((res) => res.json())
-        .then((users) => setGenderedUsers(users));
+        .then((users) => {
+          setGenderedUsers(
+            users.filter((user) => {
+              return user.rooms.length === 0 && user.matches == (null || 0);
+            })
+          );
+        });
     } else {
       fetch(`/man/`)
         .then((res) => res.json())
-        .then((users) => setGenderedUsers(users));
+        .then((users) => {
+          setGenderedUsers(
+            users.filter((user) => {
+              return user.rooms.length === 0 && user.matches == (null || 0);
+            })
+          );
+        });
     }
+  };
+
+  const checkRequest = () => {
+    fetch(`/check_recipient/${user.id}`).then((r) => {
+      if (r.ok) {
+        r.json().then((room) => {
+          setRequestingUser(room);
+
+          if (user?.matches == room[0]?.user_id) {
+            setIsRequest(false);
+          } else if (room.length == 0) {
+            setIsRequest(false);
+          } else {
+            setIsRequest(true);
+          }
+        });
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkRequest();
+    getGenderedUser();
   }, [user]);
 
   const getUser = () =>
@@ -42,13 +155,64 @@ const Dashboard = ({ user, setUser, navigate }) => {
   useEffect(() => {
     getUser();
   }, []);
+  console.log(genderedUsers);
 
   const filteredGenderedUsers = genderedUsers?.filter((genderedUser) => {
-    return genderedUser.id !== user?.matches;
+    if (user?.matches === null || user?.matches === 0) {
+      return genderedUser;
+    } else {
+      return genderedUser?.id === user?.matches;
+    }
   });
 
+  console.log(filteredGenderedUsers);
+
   function updatedMatches(matchedUserId) {
-    console.log(matchedUserId);
+    const form = {
+      user_id: user.id,
+      recipient_id: matchedUserId,
+    };
+
+    if (user.rooms[0]) {
+      fetch(`/rooms/${user.rooms[0].id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((user) => {
+            getUser();
+          });
+        } else {
+          r.json().then((err) => {
+            setErrors(err.errors);
+          });
+        }
+      });
+    } else {
+      fetch("/rooms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((room) => {
+            getUser();
+            getGenderedUser();
+          });
+        } else {
+          r.json().then((err) => {
+            console.log(err);
+            // setErrors(err.errors);
+          });
+        }
+      });
+    }
+
     fetch(`/matches/${user.id}`, {
       method: "PATCH",
       headers: {
@@ -58,7 +222,6 @@ const Dashboard = ({ user, setUser, navigate }) => {
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          console.log(user);
           getUser();
         });
       } else {
@@ -81,6 +244,8 @@ const Dashboard = ({ user, setUser, navigate }) => {
     console.log(name + " left the screen!");
   };
 
+  const [show, setShow] = useState(true);
+
   return (
     <>
       <NavBar
@@ -91,11 +256,50 @@ const Dashboard = ({ user, setUser, navigate }) => {
         showModal={false}
         setShowLogin={false}
         setShowModal={() => {}}
+        showChat={true}
       />
       {user && (
         <div className="dashboard">
-          <ChatContainer user={user} />
+          <ChatContainer user={user} setUser={setUser} navigate={navigate} />
           <div className="swipe-container">
+            {!user.answer ? <h3>{q?.questions}</h3> : <em></em>}
+            {isRequest ? (
+              <>
+                <Button variant="white" onClick={() => setShow(true)}></Button>
+
+                <Modal
+                  show={show}
+                  onHide={() => setShow(false)}
+                  dialogClassName="modal-90w"
+                  aria-labelledby="example-custom-modal-styling-title"
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title
+                      className="title"
+                      id="example-custom-modal-styling-title"
+                    >
+                      Chat Request by Anonymous User
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Are you ready to chat?</p>
+                    <Button
+                      id="btn"
+                      variant="dark"
+                      onClick={() => clickedYes()}
+                    >
+                      CHAT
+                    </Button>
+
+                    <Button id="btn" variant="dark" onClick={() => clickedNo()}>
+                      DENY
+                    </Button>
+                  </Modal.Body>
+                </Modal>
+              </>
+            ) : (
+              <em></em>
+            )}
             <div className="card-container">
               {filteredGenderedUsers?.map((genderedUser) => (
                 <TinderCard
@@ -105,17 +309,35 @@ const Dashboard = ({ user, setUser, navigate }) => {
                   onCardLeftScreen={() => outOfFrame(genderedUser.username)}
                 >
                   <div
-                    style={{ backgroundImage: "url(" + genderedUser.img + ")" }}
+                    // style={{ backgroundImage: "url(" + genderedUser.img + ")" }}
                     className="card"
                   >
-                    <h3>{genderedUser.first_name}</h3>
+                    <h5>Anonymous</h5>
+                    <h6>answered</h6>
+                    <h5 className="title">
+                      {genderedUser?.answer?.answer ? " YES " : " NO "}
+                    </h5>
+                    <em>
+                      <h4 className="link">
+                        " {genderedUser?.answer?.pitch} "
+                      </h4>
+                    </em>
                   </div>
                 </TinderCard>
               ))}
 
-              <div className="swipe-info">
-                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
-              </div>
+              <em className="swipe-info">
+                {lastDirection ? <p>" You swiped {lastDirection}</p> : <p />}
+              </em>
+              {lastDirection == "right" && user.matches ? (
+                <em>
+                  {lastDirection == "right" && user.matches
+                    ? ` and you have requested to chat "`
+                    : `guess you did not like the answer "`}
+                </em>
+              ) : (
+                <em></em>
+              )}
             </div>
           </div>
         </div>
@@ -125,101 +347,3 @@ const Dashboard = ({ user, setUser, navigate }) => {
 };
 
 export default Dashboard;
-
-// import React, { useState, useEffect } from "react";
-// import NavBar from "../../components/NavBar";
-// import Header from "../../components/Header";
-// import Search from "../../components/Search";
-// import MessageList from "../../components/MessageList";
-// import NewMessage from "../../components/NewMessage";
-
-// const Chat = ({ user, setUser, navigate }) => {
-//   const [isDarkMode, setIsDarkMode] = useState(true);
-//   const [room, setRoom] = useState([]);
-//   const [messages, setMessages] = useState([]);
-//   const [search, setSearch] = useState("");
-
-//   console.log(user.id);
-//   console.log(room);
-
-//   useEffect(() => {
-//     fetch("/messages")
-//       .then((r) => r.json())
-//       .then((messages) => setMessages(messages));
-//   }, []);
-
-//   function handleAddMessage(newMessage) {
-//     setMessages([...messages, newMessage]);
-//   }
-
-//   function handleDeleteMessage(id) {
-//     const updatedMessages = messages.filter((message) => message.id !== id);
-//     setMessages(updatedMessages);
-//   }
-
-//   function handleUpdateMessage(updatedMessageObj) {
-//     const updatedMessages = messages.map((message) => {
-//       if (message.id === updatedMessageObj.id) {
-//         return updatedMessageObj;
-//       } else {
-//         return message;
-//       }
-//     });
-//     setMessages(updatedMessages);
-//   }
-
-//   const displayedMessages = messages.filter((message) =>
-//     message.body.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   useEffect(() => {
-//     fetch("/rooms/")
-//       .then((r) => r.json())
-//       .then((room) => setRoom(room));
-//   }, []);
-
-//   if (!room)
-//     return <NavBar user={user} setUser={setUser} navigate={navigate} />;
-
-//   return (
-//     <div>
-//       <NavBar user={user} setUser={setUser} navigate={navigate} />
-//       <main className={isDarkMode ? "dark-mode" : ""}>
-//         <Header
-//           user={user}
-//           isDarkMode={isDarkMode}
-//           onToggleDarkMode={setIsDarkMode}
-//         />
-//         <Search search={search} onSearchChange={setSearch} />
-//         <MessageList
-//           messages={displayedMessages}
-//           currentUser={user}
-//           onMessageDelete={handleDeleteMessage}
-//           onUpdateMessage={handleUpdateMessage}
-//         />
-//         <NewMessage currentUser={user} onAddMessage={handleAddMessage} />
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default Chat;
-
-{
-  /* <NavBar user={user} setUser={setUser} navigate={navigate} />
-      <main className={isDarkMode ? "dark-mode" : ""}>
-        <Header
-          user={user}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={setIsDarkMode}
-        />
-        <Search search={search} onSearchChange={setSearch} />
-        <MessageList
-          messages={displayedMessages}
-          currentUser={user}
-          onMessageDelete={handleDeleteMessage}
-          onUpdateMessage={handleUpdateMessage}
-        />
-        <NewMessage currentUser={user} onAddMessage={handleAddMessage} />
-      </main> */
-}

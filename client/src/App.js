@@ -9,7 +9,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 function App() {
   const [user, setUser] = useState(null);
   const [q, setQuestions] = useState([]);
-  const [genderedUsers, setGenderedUsers] = useState(null);
+
   const [answers, setAnswers] = useState([]);
 
   const navigate = useNavigate();
@@ -20,12 +20,16 @@ function App() {
       .then((answers) => setAnswers(answers));
   }, []);
 
-  useEffect(() => {
+  const getQuestion = () => {
     fetch("/questions")
       .then((res) => res.json())
       .then((question) => {
         setQuestions(question[0]);
       });
+  };
+
+  useEffect(() => {
+    getQuestion();
   }, []);
 
   const getUser = () =>
@@ -66,7 +70,12 @@ function App() {
             exact
             path="/chat"
             element={
-              <Dashboard user={user} setUser={setUser} navigate={navigate} />
+              <Dashboard
+                user={user}
+                setUser={setUser}
+                navigate={navigate}
+                q={q}
+              />
             }
           />
           <Route
@@ -80,6 +89,7 @@ function App() {
                 q={q}
                 answers={answers}
                 setAnswers={setAnswers}
+                getQuestion={getQuestion}
               />
             }
           />
@@ -87,7 +97,12 @@ function App() {
             exact
             path="/profile"
             element={
-              <Profile user={user} setUser={setUser} navigate={navigate} />
+              <Profile
+                user={user}
+                setUser={setUser}
+                navigate={navigate}
+                getUser={getUser}
+              />
             }
           />
         </Routes>
