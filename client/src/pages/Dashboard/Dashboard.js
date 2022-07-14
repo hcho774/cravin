@@ -235,6 +235,7 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
   const swiped = (direction, swipedUserId) => {
     if (direction === "right") {
       updatedMatches(swipedUserId);
+      navigate("/chat");
     }
     // console.log("removing: " + nameToDelete);
     setLastDirection(direction);

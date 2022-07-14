@@ -63,11 +63,6 @@ const AuthModal = ({
     setShowModal(false);
   }
 
-  // if (password !== confirmPassword) {
-  //   setErrors("Passwords need to match!");
-  //   setIsConfirmed(false);
-  // }
-
   function handleSubmit(e) {
     e.preventDefault();
 
