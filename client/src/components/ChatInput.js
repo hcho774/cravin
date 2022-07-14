@@ -11,7 +11,6 @@ const ChatInput = ({
   const clickedUserId = clickedUser?.id;
   const userRoomId = user?.rooms[0]?.id;
 
-  console.log(userRoomId);
   const addNewMessage = () => {
     const newMessage = {
       room_id: userRoomId,

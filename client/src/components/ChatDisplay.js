@@ -20,13 +20,10 @@ const ChatDisplay = ({ user, clickedUser }) => {
       }
     });
 
-  console.log(clickedUserId);
-
   const getClickedUserMessage = () =>
     fetch(`/rooms/${clickedUserId}`).then((r) => {
       if (r.ok) {
         r.json().then((message) => {
-          console.log(message);
           if (!message.length) {
             console.log("message does not exist");
           } else {

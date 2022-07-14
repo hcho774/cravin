@@ -116,7 +116,6 @@ const Question = ({
             value="true"
             autoComplete="off"
             onChange={handleChange}
-            // disabled={checked ? "yes" : ""}
           />
           <label className="btn btn-secondary" id="answer" htmlFor="option1">
             Yes

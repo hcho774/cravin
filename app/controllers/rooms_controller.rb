@@ -32,6 +32,12 @@ class RoomsController < ApplicationController
         room.update!(room_params)
         render json: user, status: :ok
     end
+
+    def deleterooms
+        room = Room.destroy_all
+        head :no_content
+    end
+
   
     def destroy
         room = Room.find_by(user_id: params[:id]).destroy

@@ -155,7 +155,6 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
   useEffect(() => {
     getUser();
   }, []);
-  console.log(genderedUsers);
 
   const filteredGenderedUsers = genderedUsers?.filter((genderedUser) => {
     if (user?.matches === null || user?.matches === 0) {
@@ -164,8 +163,6 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
       return genderedUser?.id === user?.matches;
     }
   });
-
-  console.log(filteredGenderedUsers);
 
   function updatedMatches(matchedUserId) {
     const form = {
@@ -207,7 +204,6 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
         } else {
           r.json().then((err) => {
             console.log(err);
-            // setErrors(err.errors);
           });
         }
       });
@@ -237,7 +233,7 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
       updatedMatches(swipedUserId);
       navigate("/chat");
     }
-    // console.log("removing: " + nameToDelete);
+
     setLastDirection(direction);
   };
 

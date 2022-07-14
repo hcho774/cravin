@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./matchedsDisplay.scss";
+
+import { useNavigate } from "react-router-dom";
 const MatchesDisplay = ({ matches, setClickedUser }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
   const [requestWatingMsg, setRequestWatingMsg] = useState("");
   const [errors, setErrors] = useState("");
   const requested = true;
+
+  const navigate = useNavigate();
 
   const getMatches = () => {
     fetch(`/matcheduser/${matches}`).then((r) => {
@@ -24,6 +28,7 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
       getMatches();
     } else {
       console.log("No matches found");
+      navigate("/chat");
     }
   }, [matches]);
 

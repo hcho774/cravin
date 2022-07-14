@@ -11,9 +11,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
  get "/check_recipient/:id", to: "rooms#check_recipient"
-  
+  delete "/deleterooms/", to: "rooms#deleterooms"
   get "/users/", to: "users#index"
-  
+  patch "/resetmatches/", to: "users#resetmatches"
+
   get '/man/', to: "users#man"
   get '/woman/', to: "users#woman"
  get "/matcheduser/:id", to: "users#matcheduser"

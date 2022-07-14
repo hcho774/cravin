@@ -35,6 +35,12 @@ class UsersController < ApplicationController
    user.update!(profile_params)
    render json: user, status: :ok
  end
+
+ def resetmatches
+  user = User.all
+  user.update!(matches: params[:matches])
+  render json: user, status: :ok
+ end
  
  def matches
    # binding.break
