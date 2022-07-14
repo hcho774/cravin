@@ -65,6 +65,13 @@ const ChatDisplay = ({ user, clickedUser }) => {
   useEffect(() => {
     getUserMessage();
     getClickedUserMessage();
+
+    const interval = setInterval(() => {
+      getUserMessage();
+      getClickedUserMessage();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
