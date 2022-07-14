@@ -5,16 +5,16 @@ import ChatDisplay from "./ChatDisplay";
 import MatchesDisplay from "./MatchesDisplay";
 import "./chatcontainer.scss";
 
-const ChatContainer = ({ user }) => {
+const ChatContainer = ({ user, setUser, navigate }) => {
   const [clickedUser, setClickedUser] = useState(null);
 
   return (
     <div className="chat-container">
-      <ChatHeader user={user} />
+      <ChatHeader user={user} setUser={setUser} navigate={navigate} />
 
       <div>
         <button className="option" onClick={() => setClickedUser(null)}>
-          Matches
+          Blinded
         </button>
         <button className="option" disabled={!clickedUser}>
           Chat

@@ -86,6 +86,7 @@ const AuthModal = ({
           r.json().then((user) => {
             setUser(user);
             console.log(user);
+
             navigate("/profile");
             // setShowLogin(true);
           });
@@ -110,10 +111,11 @@ const AuthModal = ({
         if (r.ok) {
           r.json().then((user) => {
             setUser(user);
-            if (user.gender_identity) {
+            console.log(user);
+            if (!user.gender_identity && user.answer) {
+              navigate("/chat");
+            } else if (!user.answer) {
               navigate("/question");
-            } else {
-              navigate("/profile");
             }
           });
         } else {
@@ -164,7 +166,7 @@ const AuthModal = ({
         )}
         {/* <input className="secondary-button" type="submit" /> */}
         <button
-          class="w-100 mb-2 btn btn-lg rounded-3 btn-dark"
+          className="w-100 mb-2 btn btn-lg rounded-3 btn-dark"
           type="submit"
           disabled={isConfirmed ? "" : "no"}
         >

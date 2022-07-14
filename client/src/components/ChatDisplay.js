@@ -6,7 +6,6 @@ import "./chatdisplay.scss";
 const ChatDisplay = ({ user, clickedUser }) => {
   const userId = user?.id;
   const clickedUserId = clickedUser?.id;
-  console.log(user);
 
   const [userMessages, setUserMessages] = useState(null);
   const [clickedUserMessage, setClickedUserMessage] = useState(null);
@@ -16,16 +15,23 @@ const ChatDisplay = ({ user, clickedUser }) => {
     fetch(`/rooms/${userId}`).then((r) => {
       if (r.ok) {
         r.json().then((message) => {
-          setUserMessages(message[0]["messages"]);
+          setUserMessages(message[0]?.messages);
         });
       }
     });
+
+  console.log(clickedUserId);
 
   const getClickedUserMessage = () =>
     fetch(`/rooms/${clickedUserId}`).then((r) => {
       if (r.ok) {
         r.json().then((message) => {
-          setClickedUserMessage(message[0]["messages"]);
+          console.log(message);
+          if (!message.length) {
+            console.log("message does not exist");
+          } else {
+            setClickedUserMessage(message[0]?.messages);
+          }
         });
       }
     });
@@ -60,13 +66,6 @@ const ChatDisplay = ({ user, clickedUser }) => {
     getUserMessage();
     getClickedUserMessage();
   }, []);
-
-  // const getClickedUserMessage = () =>
-  //   fetch(`/message/${matches}`).then((r) => {
-  //     if (r.ok) {
-  //       r.json().then((message) => console.log(message));
-  //     }
-  //   });
 
   return (
     <div>

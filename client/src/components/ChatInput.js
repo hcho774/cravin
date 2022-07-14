@@ -31,12 +31,6 @@ const ChatInput = ({
           getUserMessage();
           getClickedUserMessage();
           setTextArea("");
-          // setUser(user);
-          // if (user.gender_identity) {
-          //   navigate("/question");
-          // } else {
-          //   navigate("/profile");
-          // }
         });
       } else {
         r.json().then((err) => {
@@ -47,13 +41,24 @@ const ChatInput = ({
     });
   };
 
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      addNewMessage();
+    }
+  }
+
   return (
     <div className="chat-input">
       <textarea
         value={textArea}
         onChange={(e) => setTextArea(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
-      <button className="secondary-button" onClick={addNewMessage}>
+      <button
+        className="secondary-button"
+        onClick={addNewMessage}
+        type="submit"
+      >
         Submit
       </button>
     </div>

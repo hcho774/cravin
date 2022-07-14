@@ -2,27 +2,44 @@
     padding: 20px;
     height: 60vh;
     overflow-y: scroll;
-
-
-
     bottom:0;
 
 
-
     .img-container {
-    height: 30px;
-    width: 30px;
+    height: 45px;
+    width: 300px;
     border-radius: 15px;
-    
+    display: flex;
     margin: 10px;
+
+    img {
+        width: 100%;
+        height: 50px;
+        width: 50px;
+        border-radius: 15px;
     
+            text-indent:-9999px
+    
+     
+    }
+    p{
 
+        margin-top: 10px;
+        margin-left: 2px;
+    }
+
+    em{
+        font-size: 8px;
+        margin-top: 15px;
+       
+       display: flex;
+       margin-left: 10px
+    }
+  
 }
 
-.img-container img {
-    width: 100%;
-        text-indent:-9999px
 
- 
-}
+
+
+
 }

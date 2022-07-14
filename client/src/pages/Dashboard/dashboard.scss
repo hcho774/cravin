@@ -2,24 +2,26 @@
     display: flex;
     justify-content: space-between;
     .swipe-container {
-        width: 70%;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        // justify-content: center;
         align-items: center;
         height: 100vh;
+        margin-top: 100px;
 
     }
 
     .card-container {
-        width: 400px;
-        height: 650px;
+        margin-top: 20px;
+        width: 500px;
+        height: 320px;
         .swipe {
             position: absolute;
 
 .card { 
-    width: 400px;
-    height: 650px;
+    width: 500px;
+    height: 320px;
 
     border-radius: 30px;
     background-size: cover;
@@ -29,22 +31,40 @@
 
     
     background-position: center;
+    h5{
+        margin-top: 10px;
+    }
+
+    h4{
+        margin-bottom: 30px;
+    }
+    h3 {
+        
+        margin-top: 10px;
+      
+        
+    }
     
-h3 {
-    margin-top: 0;
-}
+    // span {
+    //     margin-bottom: 20px;
+    //     font-weight: bold;
+    // }
+
 
 }
         }
     }
-    .swipe-info {
-        position: absolute;
-        bottom: 0;
-        padding: 10px;
-    }
+    // .swipe-info {
+    //     position: absolute;
+    //     bottom: 0;
+    //     padding: 0px;
+    // }
 }
 
 
 
+#btn{
+    margin-right: 10px;
+}
 
 
