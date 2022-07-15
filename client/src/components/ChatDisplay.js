@@ -66,7 +66,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
     const interval = setInterval(() => {
       getUserMessage();
       getClickedUserMessage();
-    }, 1000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);

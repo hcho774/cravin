@@ -312,6 +312,7 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
                     className="card"
                   >
                     <h5>Anonymous</h5>
+                    <h5>For demo purpose, username: {genderedUser.username}</h5>
                     <h6>answered</h6>
                     <h5 className="title">
                       {genderedUser?.answer?.answer ? " YES " : " NO "}
