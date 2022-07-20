@@ -6,7 +6,6 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
   const [requestWatingMsg, setRequestWatingMsg] = useState("");
   const [errors, setErrors] = useState("");
-  const requested = true;
 
   const navigate = useNavigate();
 

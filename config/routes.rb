@@ -5,23 +5,19 @@ Rails.application.routes.draw do
   resources :rooms
   resources :questions
   resources :messages
-  # resources :rooms, only: [:show, :create]
-  # get "/rooms", to: "rooms#index"
-  # get "/rooms/:recipient_id", to: "rooms#show"
-  # Defines the root path route ("/")
-  # root "articles#index"
- get "/check_recipient/:id", to: "rooms#check_recipient"
+
+  get "/check_recipient/:id", to: "rooms#check_recipient"
   delete "/deleterooms/", to: "rooms#deleterooms"
   get "/users/", to: "users#index"
   patch "/resetmatches/", to: "users#resetmatches"
 
   get '/man/', to: "users#man"
   get '/woman/', to: "users#woman"
- get "/matcheduser/:id", to: "users#matcheduser"
+  get "/matcheduser/:id", to: "users#matcheduser"
   patch '/users/:id', to: "users#update"
   patch "/matches/:id", to: "users#matches"
   post "/signup", to: "users#create"
-   get "/me", to: "users#show"
+  get "/me", to: "users#show"
   
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"

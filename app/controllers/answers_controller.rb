@@ -1,8 +1,6 @@
 class AnswersController < ApplicationController
-
   rescue_from ActiveRecord::RecordInvalid, with: :invalid
   skip_before_action :authorize, only: :index
-
 
     def index
         answers = Answer.all

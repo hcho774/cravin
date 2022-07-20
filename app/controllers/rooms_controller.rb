@@ -23,7 +23,6 @@ class RoomsController < ApplicationController
   
     def create
         room = Room.create!(room_params)
-        # Message.create!(room_id: room.id, message: "")
         render json: room, status: :created
     end
   

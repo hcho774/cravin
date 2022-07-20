@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
 import "./profile.scss";
-
+//create a form that has initial data to be used to reset after user input has submitted
 const form = {
   username: "",
   first_name: "First Name",
@@ -17,8 +17,7 @@ const form = {
 };
 
 const Profile = ({ user, setUser, navigate, getUser }) => {
-  const [success, setSuccess] = useState(false);
-  const [errors, setErrors] = useState("");
+  // create useState for initital formdata that contains an object to collect user information
   const [formData, setFormData] = useState({
     username: user.username,
     first_name: "",
@@ -32,34 +31,38 @@ const Profile = ({ user, setUser, navigate, getUser }) => {
     img: "",
     matches: [],
   });
-
+  //handle form submit
   function handleSubmit(e) {
+    //preventing page to refresh when form gets submitted
     e.preventDefault();
-
+    //update user profile by using PATCH method
     fetch(`/users/${user.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData), // pass formdata that we collect from users
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          setSuccess(true);
-          getUser();
-          setFormData(form);
-          navigate("/question");
+          getUser(); // render getUser function
+          setFormData(form); //resetting form inputs with empty form
+          navigate("/question"); // redirect to question page
         });
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        r.json().then((err) => console.log(err));
       }
     });
   }
+  // handle changes in form inputs
   function handleChange(e) {
+    //store input values to value
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    //store input name to name
     const name = e.target.name;
 
+    //set formData to inputs data that users enter
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,

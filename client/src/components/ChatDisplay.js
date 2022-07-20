@@ -9,8 +9,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
 
   const [userMessages, setUserMessages] = useState(null);
   const [clickedUserMessage, setClickedUserMessage] = useState(null);
-  const [userRoomId, setUserRoomId] = useState(null);
-
+  const [updated, setUpdated] = useState(null);
   const getUserMessage = () =>
     fetch(`/rooms/${userId}`).then((r) => {
       if (r.ok) {
@@ -63,13 +62,13 @@ const ChatDisplay = ({ user, clickedUser }) => {
     getUserMessage();
     getClickedUserMessage();
 
-    const interval = setInterval(() => {
-      getUserMessage();
-      getClickedUserMessage();
-    }, 2000);
+    // const interval = setInterval(() => {
+    //   getUserMessage();
+    //   getClickedUserMessage();
+    // }, 2000);
 
-    return () => clearInterval(interval);
-  }, []);
+    // return () => clearInterval(interval);
+  }, [updated]);
 
   return (
     <div>
@@ -79,6 +78,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
         clickedUser={clickedUser}
         getUserMessage={getUserMessage}
         getClickedUserMessage={getClickedUserMessage}
+        setUpdated={setUpdated}
       />
     </div>
   );

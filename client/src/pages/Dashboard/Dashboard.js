@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
-import Header from "../../components/Header";
-import Search from "../../components/Search";
-import MessageList from "../../components/MessageList";
-import NewMessage from "../../components/NewMessage";
 import TinderCard from "react-tinder-card";
 import ChatContainer from "../../components/ChatContainer";
 import "./dashboard.scss";

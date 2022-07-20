@@ -5,6 +5,7 @@ const ChatInput = ({
   clickedUser,
   getUserMessage,
   getClickedUserMessage,
+  setUpdated,
 }) => {
   const [textArea, setTextArea] = useState("");
   const userId = user?.id;
@@ -30,11 +31,11 @@ const ChatInput = ({
           getUserMessage();
           getClickedUserMessage();
           setTextArea("");
+          setUpdated(null);
         });
       } else {
         r.json().then((err) => {
           console.log(err);
-          // setErrors(err.errors);
         });
       }
     });
