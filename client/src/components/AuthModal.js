@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./authmodal.scss";
-
+//inital form data to clear user inputs in form
 const form = {
   username: "",
   first_name: "",
@@ -15,20 +15,20 @@ const form = {
   matches: 0,
 };
 
-const AuthModal = ({
-  setShowModal,
-  setUser,
-  setShowLogin,
-  showLogin,
-  navigate,
-}) => {
+const AuthModal = ({ setShowModal, setUser, showLogin, navigate }) => {
+  //username useState initial value of ""
   const [username, setUsername] = useState("");
+  //password useState initial value of ""
   const [password, setPassword] = useState("");
+  //errormessage useState initial value of []
   const [errors, setErrors] = useState([]);
+  //password confimred useState initial value of null
   const [confirmPassword, setConfirmPassword] = useState(null);
+  //loading useState initial value of false
   const [isLoading, setIsLoading] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(true);
-
+  //
+  // const [isConfirmed, setIsConfirmed] = useState(true);
+  //formData useState initial value of empty form
   const [formData, setFormData] = useState({
     username: "",
     first_name: "",
@@ -42,14 +42,17 @@ const AuthModal = ({
     img: "",
     matches: 0,
   });
-
+  //handle changes user inputs in form
   function onChange(e) {
+    //if showLogin modal is true
     if (showLogin) {
+      //update formData with user inputs
       setFormData({
         ...formData,
         [e.target.name]: e.target.value,
       });
     } else {
+      //else username and password only
       if (e.target.name === "username") {
         setUsername(e.target.value);
       } else {
@@ -58,17 +61,21 @@ const AuthModal = ({
     }
   }
 
-  console.log(formData);
+  //handle click to set showModal to false
   function handleClick() {
     setShowModal(false);
   }
-
+  //handle login and sign up form submit
   function handleSubmit(e) {
+    //preventing page from refreshing
     e.preventDefault();
-
-    if (showLogin) {
+    // if showLogin is true which means user does not have an account and user put password and confirmPassword correctly
+    if (showLogin && formData.password === confirmPassword) {
+      //set errors to []
       setErrors([]);
+      //set isloading to true
       setIsLoading(true);
+      //create user with form Data in backend using fetch POST method
       fetch("/signup", {
         method: "POST",
         headers: {
@@ -76,25 +83,29 @@ const AuthModal = ({
         },
         body: JSON.stringify(formData),
       }).then((r) => {
+        //set isLoading to false since request made
         setIsLoading(false);
         if (r.ok) {
           r.json().then((user) => {
+            //set current user to signedup user
             setUser(user);
-            console.log(user);
-
+            //navigate to profile page
             navigate("/profile");
-            // setShowLogin(true);
           });
         } else {
           r.json().then((err) => {
+            //set errors message if request did go through
             setErrors(err.errors);
-            console.log(err);
           });
         }
       });
+      //reseting signup form inputs
       setFormData(form);
-    } else {
+    } else if (!showLogin) {
+      //else if user does have account and tries to login
+      //set isLoading to true
       setIsLoading(true);
+      //Login with username and password using fetch POST method which will create a session in the backend and authenticate the user
       fetch("/login", {
         method: "POST",
         headers: {
@@ -102,23 +113,32 @@ const AuthModal = ({
         },
         body: JSON.stringify({ username, password }),
       }).then((r) => {
+        //set isLoading to false
         setIsLoading(false);
         if (r.ok) {
           r.json().then((user) => {
+            //if request went through successfully then
+            //set user with currently logged in user
             setUser(user);
-            console.log(user);
+            //check if user has already filled out their account profile or not
             if (!user.gender_identity && user.answer) {
+              //if user has already filled out profile and answered the question then navigate to chat page directly
               navigate("/chat");
             } else if (!user.answer) {
+              //elst if user has filed out profile but has not answered the question then navigate to question page
               navigate("/question");
             }
           });
         } else {
           r.json().then((err) => {
+            // if not successful then set errorr message
             setErrors(err.errors);
           });
         }
       });
+    } else {
+      //if user did not put password and confirm password correctly then set errorr message
+      setErrors("Please confirm your password");
     }
   }
 
@@ -159,23 +179,13 @@ const AuthModal = ({
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         )}
-        {/* <input className="secondary-button" type="submit" /> */}
         <button
           className="w-100 mb-2 btn btn-lg rounded-3 btn-dark"
           type="submit"
-          disabled={isConfirmed ? "" : "no"}
         >
           {isLoading ? "Loading..." : "Submit"}
         </button>
-        {/* <h2 class="fs-6 fw-bold mt-2 mb-2">
-          Already have an account? &nbsp;
-          <button
-            class="w-8 mb-2 btn btn-sm rounded-3 btn-dark"
-            onClick={() => setShowLogin(false)}
-          >
-            Log in
-          </button>
-        </h2> */}
+
         <hr />
         <h2>GET THE APP</h2>
       </form>

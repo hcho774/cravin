@@ -11,36 +11,41 @@ const Question = ({
   answers,
   getQuestion,
 }) => {
+  //set useState for success and error messages to check response from backend whether POST & PATCH go through successfully or not
   const [success, setSuccess] = useState("");
   const [errors, setErrors] = useState("");
-
+  //inital form data to reset the answer form inputs
   const form = {
     user_id: user.id,
     questions_id: q.id,
     answer: null,
     pitch: "Pitch your thoughts to the world!",
   };
-
+  //useState that has formData set to initial values from user
   const [formData, setFormData] = useState({
     user_id: user.id,
     question_id: q.id,
     answer: null,
     pitch: "Pitch your thoughts to the world!",
   });
-
+  //handle changes in user inputs for formData
   function handleChange(e) {
+    //updating the formData with user input values
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   }
-
+  //check if user has already answered the quetion
   const existingAnswer = answers?.find((answer) => {
     return answer.user_id === user.id;
   });
 
+  //handle answer form submit
   function handleSubmit(e) {
+    //preventing page from refreshing
     e.preventDefault();
+    // check if user has not answered the question then Create user answer(formData) in Backend using Fetch request (POST method)
     if (!existingAnswer) {
       fetch(`/answers`, {
         method: "POST",
@@ -50,18 +55,19 @@ const Question = ({
         body: JSON.stringify(formData),
       }).then((r) => {
         if (r.ok) {
+          //  //if the response is successful
           r.json().then((answer) => {
-            setAnswers([...answers, answer]);
-            setSuccess("You have successfully answered this question.");
-            setFormData(form);
-            getQuestion();
-            navigate("/chat");
+            setSuccess("You have successfully answered this question."); //set success message
+            setFormData(form); //reset formData
+            getQuestion(); //invoke get question function
+            navigate("/chat"); // nevigate to /chat page
           });
         } else {
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((err) => setErrors(err.errors)); // if request did not go through then set errors with error response
         }
       });
     } else {
+      //if user has already answered the question then update the user answer in Backend using Fetch request (PATCH method)
       fetch(`/answers/${existingAnswer.id}`, {
         method: "PATCH",
         headers: {
@@ -73,19 +79,19 @@ const Question = ({
         }),
       }).then((r) => {
         if (r.ok) {
+          //if response is successfully updated
           r.json().then((answer) => {
-            const filteredAnswer = answers.filter((ans) => {
-              return ans.user_id !== user.id;
-            });
-
-            setAnswers(answer);
+            //set success message
             setSuccess("You have successfully updated your answer.");
+            //reset the formData
             setFormData(form);
+            //invoke get question function
             getQuestion();
+            //navigate to chat page
             navigate("/chat");
           });
         } else {
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((err) => setErrors(err.errors)); //// if request did not go through then set errors with error response
         }
       });
     }

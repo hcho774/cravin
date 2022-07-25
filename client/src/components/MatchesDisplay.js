@@ -1,36 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./matchedsDisplay.scss";
 
-import { useNavigate } from "react-router-dom";
-const MatchesDisplay = ({ matches, setClickedUser }) => {
-  const [matchedProfiles, setMatchedProfiles] = useState(null);
-  const [requestWatingMsg, setRequestWatingMsg] = useState("");
-  const [errors, setErrors] = useState("");
-
-  const navigate = useNavigate();
-
-  const getMatches = () => {
-    fetch(`/matcheduser/${matches}`).then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setMatchedProfiles(user));
-      } else {
-        r.json().then((err) => {
-          console.log(err.error);
-          setErrors(err.error);
-        });
-      }
-    });
-  };
-  // console.log(matchedProfiles);
-  useEffect(() => {
-    if (matches !== 0) {
-      getMatches();
-    } else {
-      console.log("No matches found");
-      navigate("/chat");
-    }
-  }, [matches]);
-
+const MatchesDisplay = ({
+  matches,
+  setClickedUser,
+  matchedProfiles,
+  setRequestWatingMsg,
+  requestWatingMsg,
+}) => {
   return (
     <div className="matches-display">
       <div
@@ -51,7 +28,6 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
                 ? matchedProfiles?.img
                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
             }
-            // alt={matchedProfiles?first_name + " profile"}
           />
         </div>
         <h3>

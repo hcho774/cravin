@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import "./chatinput.scss";
 const ChatInput = ({
   user,
-  clickedUser,
   getUserMessage,
   getClickedUserMessage,
   setUpdated,
+  navigate,
 }) => {
   const [textArea, setTextArea] = useState("");
-  const userId = user?.id;
-  const clickedUserId = clickedUser?.id;
   const userRoomId = user?.rooms[0]?.id;
 
   const addNewMessage = () => {
@@ -28,6 +27,7 @@ const ChatInput = ({
       console.log(r);
       if (r.ok) {
         r.json().then((message) => {
+          navigate("/chat");
           getUserMessage();
           getClickedUserMessage();
           setTextArea("");

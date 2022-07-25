@@ -3,18 +3,21 @@ import Chat from "./Chat";
 import ChatInput from "./ChatInput";
 import "./chatdisplay.scss";
 
-const ChatDisplay = ({ user, clickedUser }) => {
+const ChatDisplay = ({ user, clickedUser, navigate }) => {
   const userId = user?.id;
   const clickedUserId = clickedUser?.id;
 
   const [userMessages, setUserMessages] = useState(null);
   const [clickedUserMessage, setClickedUserMessage] = useState(null);
   const [updated, setUpdated] = useState(null);
+
   const getUserMessage = () =>
     fetch(`/rooms/${userId}`).then((r) => {
       if (r.ok) {
         r.json().then((message) => {
           setUserMessages(message[0]?.messages);
+
+          console.log(message);
         });
       }
     });
@@ -27,6 +30,8 @@ const ChatDisplay = ({ user, clickedUser }) => {
             console.log("message does not exist");
           } else {
             setClickedUserMessage(message[0]?.messages);
+
+            console.log(message);
           }
         });
       }
@@ -60,6 +65,17 @@ const ChatDisplay = ({ user, clickedUser }) => {
 
   useEffect(() => {
     getUserMessage();
+    // getClickedUserMessage();
+
+    // const interval = setInterval(() => {
+    //   getUserMessage();
+    //   getClickedUserMessage();
+    // }, 2000);
+
+    // return () => clearInterval(interval);
+  }, [clickedUserMessage]);
+
+  useEffect(() => {
     getClickedUserMessage();
 
     // const interval = setInterval(() => {
@@ -68,7 +84,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
     // }, 2000);
 
     // return () => clearInterval(interval);
-  }, [updated]);
+  }, []);
 
   return (
     <div>
@@ -79,6 +95,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
         getUserMessage={getUserMessage}
         getClickedUserMessage={getClickedUserMessage}
         setUpdated={setUpdated}
+        navigate={navigate}
       />
     </div>
   );

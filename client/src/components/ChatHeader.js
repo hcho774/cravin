@@ -3,10 +3,14 @@ import "./chatheader.scss";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import IconButton from "@mui/material/IconButton";
 const ChatHeader = ({ user, setUser, navigate }) => {
+  //handles logout for current user
   function handleLogout() {
+    // fetch request to clear current user session
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
+        //set current user to null
         setUser(null);
+        //navigate to home page which has login and signup modal
         navigate("/");
       }
     });
