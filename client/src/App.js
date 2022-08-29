@@ -6,7 +6,7 @@ import Profile from "./pages/profile/Profile";
 import Question from "./pages/question/Question";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-function App() {
+function App({ cable }) {
   //create internal state called user for our component with an initial value of null
   const [user, setUser] = useState(null);
   //create useState for Question
@@ -105,6 +105,7 @@ function App() {
             path="/chat"
             element={
               <Dashboard
+                cable={cable}
                 user={user}
                 setUser={setUser}
                 navigate={navigate}

@@ -3,25 +3,24 @@ import Chat from "./Chat";
 import ChatInput from "./ChatInput";
 import "./chatdisplay.scss";
 
-const ChatDisplay = ({ user, clickedUser, navigate }) => {
+const ChatDisplay = ({ user, clickedUser, navigate, cable }) => {
+  //create variables to store user and corresponding user id
   const userId = user?.id;
   const clickedUserId = clickedUser?.id;
-
+  // initialize usestate for UserMessages and corresponding user message
   const [userMessages, setUserMessages] = useState(null);
   const [clickedUserMessage, setClickedUserMessage] = useState(null);
   const [updated, setUpdated] = useState(null);
-
+  // function to fetch user's messages
   const getUserMessage = () =>
     fetch(`/rooms/${userId}`).then((r) => {
       if (r.ok) {
         r.json().then((message) => {
           setUserMessages(message[0]?.messages);
-
-          console.log(message);
         });
       }
     });
-
+  // function to fetch corresponding user's messages
   const getClickedUserMessage = () =>
     fetch(`/rooms/${clickedUserId}`).then((r) => {
       if (r.ok) {
@@ -30,15 +29,13 @@ const ChatDisplay = ({ user, clickedUser, navigate }) => {
             console.log("message does not exist");
           } else {
             setClickedUserMessage(message[0]?.messages);
-
-            console.log(message);
           }
         });
       }
     });
-
+  //create empty array to store user's messages
   const messages = [];
-
+  //loop through user's messages and format retrieved user's messages into formattedMessage and push it to the empty array which we created called messages
   userMessages?.forEach((message) => {
     const formattedMessage = {};
     formattedMessage["room_id"] = message?.room_id;
@@ -48,7 +45,7 @@ const ChatDisplay = ({ user, clickedUser, navigate }) => {
     formattedMessage["timestamp"] = message.created_at;
     messages.push(formattedMessage);
   });
-
+  //loop through corresponding user's messages and format retrieved corresponding user's messages into formattedMessage and push it to the empty array which we created called messages
   clickedUserMessage?.forEach((message) => {
     const formattedMessage = {};
     formattedMessage["room_id"] = message?.room_id;
@@ -58,13 +55,14 @@ const ChatDisplay = ({ user, clickedUser, navigate }) => {
     formattedMessage["timestamp"] = message.created_at;
     messages.push(formattedMessage);
   });
-
+  //ordering messages in descendingOrder by time
   const descendingOrderMessage = messages?.sort((a, b) =>
     a.timestamp.localeCompare(b.timestamp)
   );
-
+  // useEffect to fire getUserMessage
   useEffect(() => {
     getUserMessage();
+    //************ tried to make this chat real time using setInterval to fetch data every 2 seconds which is a bad approach if this application scale up but wanted to see how it would look.
     // getClickedUserMessage();
 
     // const interval = setInterval(() => {
@@ -73,17 +71,20 @@ const ChatDisplay = ({ user, clickedUser, navigate }) => {
     // }, 2000);
 
     // return () => clearInterval(interval);
+    //************
   }, [clickedUserMessage]);
 
+  // useEffect to fire getClikedUserMessage
   useEffect(() => {
     getClickedUserMessage();
-
+    //************ tried to make this chat real time using setInterval to fetch data every 2 seconds which is a bad approach if this application scale up but wanted to see how it would look.
     // const interval = setInterval(() => {
     //   getUserMessage();
     //   getClickedUserMessage();
     // }, 2000);
 
     // return () => clearInterval(interval);
+    //************
   }, []);
 
   return (

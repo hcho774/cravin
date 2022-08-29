@@ -6,7 +6,7 @@ import "./dashboard.scss";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-const Dashboard = ({ user, setUser, navigate, q }) => {
+const Dashboard = ({ user, setUser, navigate, q, cable }) => {
   const [errors, setErrors] = useState("");
   //set useState for Chat Request with initial value of false
   const [isRequest, setIsRequest] = useState(false);
@@ -294,7 +294,12 @@ const Dashboard = ({ user, setUser, navigate, q }) => {
       />
       {user && (
         <div className="dashboard">
-          <ChatContainer user={user} setUser={setUser} navigate={navigate} />
+          <ChatContainer
+            user={user}
+            setUser={setUser}
+            navigate={navigate}
+            cable={cable}
+          />
           <div className="swipe-container">
             {!user.answer ? <h3>{q?.questions}</h3> : <em></em>}
             {isRequest ? (

@@ -8,15 +8,16 @@ const ChatInput = ({
   setUpdated,
   navigate,
 }) => {
+  //set state for text input area for user
   const [textArea, setTextArea] = useState("");
   const userRoomId = user?.rooms[0]?.id;
-
+  // function to add new messages to post to backend
   const addNewMessage = () => {
     const newMessage = {
       room_id: userRoomId,
       message: textArea,
     };
-
+    //Fetching new messages to backend by using POST Method
     fetch("/messages", {
       method: "POST",
       headers: {
@@ -40,7 +41,7 @@ const ChatInput = ({
       }
     });
   };
-
+  //handling enter key down to trigger addNewMessage function when user pushes enter key
   function handleKeyDown(e) {
     if (e.key === "Enter") {
       addNewMessage();

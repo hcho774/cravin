@@ -6,10 +6,10 @@ class MessagesController < ApplicationController
     end
 
     def create
-      
         message = Message.create!(message_params)
         render json: message, status: :created
     end
+    
 private
 
 def message_params

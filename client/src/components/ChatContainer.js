@@ -4,7 +4,7 @@ import ChatDisplay from "./ChatDisplay";
 import MatchesDisplay from "./MatchesDisplay";
 import "./chatcontainer.scss";
 
-const ChatContainer = ({ user, setUser, navigate }) => {
+const ChatContainer = ({ user, setUser, navigate, cable }) => {
   //create useState for clicked user in chat container with intial value of null
   const [clickedUser, setClickedUser] = useState(null);
   //create useState for matchedprofile with initial value of null
@@ -77,6 +77,7 @@ const ChatContainer = ({ user, setUser, navigate }) => {
       )}
       {clickedUser && (
         <ChatDisplay
+          cable={cable}
           user={user}
           clickedUser={clickedUser}
           navigate={navigate}
