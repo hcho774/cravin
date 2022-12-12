@@ -233,4 +233,4 @@ Feel free to contact me for any questions!
 
 ## License
 
-[Click to view]()
+[Click to view](https://github.com/hcho774/cravin/blob/main/LICENSE)
