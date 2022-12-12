@@ -31,6 +31,7 @@ Cravin - Social meeting application that allows a user to chat and meet an anony
 <kbd>
 <img src="./profile.png">
 </kbd>
+</div>
 
 ## Project Demo
 
