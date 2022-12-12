@@ -45,12 +45,12 @@ Cravin - Social meeting application that allows a user to chat and meet an anony
 
 ### Backend Development
 
-Ruby 3.1.0
-Rails 7.0.3
-Redis
-Active_model_serializers 0.10.12
-Bcrypt 3.1.7
-postgresql 9.3
+- Ruby 3.1.0
+- Rails 7.0.3
+- Redis
+- Active_model_serializers 0.10.12
+- Bcrypt 3.1.7
+- postgresql 9.3
 
 ### Frontend Development
 
@@ -210,7 +210,7 @@ end
 - Users can keep the conversation with the other user only if both of them are interested in talking
 - Users are not allowed to talk to or see other users when they are in a conversation with other user which means that you can truly focus on only one.
 
-further to be developed
+Stretch Goal
 
 - As relationship or conversation lasts, you can request to unlock the profile of the user if both willingly open
   Chat disappears after certain time period
