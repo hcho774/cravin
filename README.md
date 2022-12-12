@@ -32,19 +32,6 @@ Cravin - Social meeting application that allows a user to chat and meet an anony
 <img src="./profile.png">
 </kbd>
 
-<br/>
-<div align="center">
-<kbd>
-<img src="./answer.png">
-</kbd>
-
-<br/>
-<div align="center">
-<kbd>
-<img src="./chat.png">
-</kbd>
-</div>
-
 ## Project Demo
 
 [Click to view site](https://cravin0.herokuapp.com/)
@@ -57,23 +44,12 @@ Cravin - Social meeting application that allows a user to chat and meet an anony
 
 ### Backend Development
 
-Ruby "3.1.0"
-Rails "7.0.3"
+Ruby 3.1.0
+Rails 7.0.3
 Redis
-Active_model_serializers "0.10.12"
-Bcrypt "3.1.7"
-
-# Use postgresql as the database for Active Record
-
-gem "pg", "~> 1.1"
-
-- Node.js - version 14.6.0
-- Express - version 4.17.1
-- Express-Validator - version 6.6.1
-- Config - version 3.3.2
-- JWT - version 8.5.1
-- Mongoose - version 5.10.0
-- Request - version 2.88.2
+Active_model_serializers 0.10.12
+Bcrypt 3.1.7
+postgresql 9.3
 
 ### Frontend Development
 
