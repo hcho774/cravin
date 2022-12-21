@@ -203,7 +203,7 @@ end
 - Users can create account through application.
 - Users can add profile information, profile image.
 - Users receive one question a day from the application and answers the question by YES or NO with a pitched message to show their thoughts on the question.
-- Users can view other users' answers with thier anonymous basic profile according to similar & opposite preference.
+- Users can view other users' answers with their anonymous basic profile according to similar & opposite preference.
 - Users can request to chat other users.
 - If the other user accepts the user’s request, then they can talk to each other through a chat only for a day.
 - Users are permitted to only one request and acceptance for a conversation per day.
